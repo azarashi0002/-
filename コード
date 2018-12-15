@@ -1,0 +1,26 @@
+#include<Siv3D.hpp>
+
+struct star :IEffect {
+	static constexpr double time = 1.0;
+	static constexpr double size = 30.0;
+	Vec2 pos;
+	ColorF color;
+
+	star(const Vec2& pos, const ColorF color)
+		:pos(pos), color(color) {}
+	bool update(double t) override {
+		Shape2D::Star(size * (time - t), pos, t).draw(ColorF(color, time - t));
+		
+		return t < time;
+	}
+};
+
+void Main()
+{
+	Effect effect;
+	while (System::Update()) {
+		if (MouseL.pressed())
+			effect.add<star>(Cursor::PosF(), RandomColorF());
+		effect.update();
+	}
+}
