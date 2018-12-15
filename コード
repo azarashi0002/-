@@ -9,7 +9,7 @@ struct star :IEffect {
 	star(const Vec2& pos, const ColorF color)
 		:pos(pos), color(color) {}
 	bool update(double t) override {
-		Shape2D::Star(size * (time - t), pos, t).draw(ColorF(color, time - t));
+		Shape2D::Star(size * (1 - t / time), pos, t).draw(ColorF(color, 1 - t / time));
 		
 		return t < time;
 	}
